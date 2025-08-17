@@ -121,8 +121,8 @@ namespace WindowsVoiceTypeLauncher
                 if (ImmGetConversionStatus(hIMC, out conversion, out sentence))
                 {
  
-                    conversion &= ~IME_CMODE_ALPHANUMERIC; // 清除字母模式
-                    conversion |= targetMode;              // 设置目标模式
+                    conversion &= ~IME_CMODE_ALPHANUMERIC; 
+                    conversion |= targetMode;              
 
 
                     return ImmSetConversionStatus(hIMC, conversion, sentence);
