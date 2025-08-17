@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace VoiceTypeLauncher
+namespace WindowsVoiceTypeLauncher
 {
     internal static unsafe partial class VoiceTypeLauncher
     {
         #region Win32 API Structures and Constants
-
         [StructLayout(LayoutKind.Sequential)]
         private struct INPUT
         {
@@ -59,19 +58,17 @@ namespace VoiceTypeLauncher
         private const uint KEYEVENTF_KEYUP = 0x0002;
         private const ushort VK_LWIN = 0x5B;
         private const ushort VK_H = 0x48;
-
         #endregion
 
         #region P/Invoke Imports
-
-
         [DllImport("user32.dll", SetLastError = true)]
         private static extern uint SendInput(uint nInputs, INPUT* pInputs, int cbSize);
-
         #endregion
+    }
 
-
-        static void Main()
+    internal static unsafe partial class VoiceTypeLauncher
+    {
+        private static void LaunchVoiceType()
         {
             const int inputCount = 4;
             INPUT* inputs = stackalloc INPUT[inputCount];
@@ -99,7 +96,15 @@ namespace VoiceTypeLauncher
 
             int cbSize = Marshal.SizeOf(typeof(INPUT));
             uint result = SendInput(inputCount, inputs, cbSize);
+        }
 
+        static void Main()
+        {
+
+            SwitchInputLanguage("zh-CN");
+            //var success = SetAlphanumericMode();
+            SetNativeMode();
+            LaunchVoiceType();
         }
     }
 }
