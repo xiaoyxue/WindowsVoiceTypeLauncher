@@ -9,39 +9,7 @@ using System.Threading.Tasks;
 
 namespace WindowsVoiceTypeLauncher
 {
-    internal partial class VoiceTypeLauncher
-    {
-        #region P/Invoke Imports   
-        [DllImport("user32.dll")]
-        internal static extern IntPtr GetForegroundWindow();
-
-
-        [DllImport("user32.dll")]
-        internal static extern uint GetWindowThreadProcessId(IntPtr hWnd, IntPtr ProcessId);
-
-
-        [DllImport("user32.dll")]
-        internal static extern IntPtr GetKeyboardLayout(uint idThread);
-
-
-        [DllImport("user32.dll")]
-        internal static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
-
-        [DllImport("imm32.dll")]
-        private static extern IntPtr ImmGetContext(IntPtr hWnd);
-
-        [DllImport("imm32.dll")]
-        private static extern bool ImmGetConversionStatus(IntPtr hIMC, out int lpdwConversion, out int lpdwSentence);
-
-        [DllImport("imm32.dll")]
-        private static extern bool ImmSetConversionStatus(IntPtr hIMC, int fdwConversion, int fdwSentence);
-
-        [DllImport("imm32.dll")]
-        private static extern bool ImmReleaseContext(IntPtr hWnd, IntPtr hIMC);
-        #endregion
-    }
-
-    internal partial class VoiceTypeLauncher
+    internal static unsafe partial class VoiceTypeLauncher
     {
         private const uint WM_INPUTLANGCHANGEREQUEST = 0x0050;
         private const int IME_CMODE_ALPHANUMERIC = 0x0000;  // English Mode
